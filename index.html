@@ -2,58 +2,101 @@
 <style>
   * { box-sizing: border-box; }
   body { font-family: 'Inter', sans-serif; margin: 0; background: #f9f9f9; }
-  .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000; }
-  .popup { background: #fff; border-radius: 16px; max-width: 980px; width: 100%; display: flex; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.15); position: relative; }
-  .left { padding: 40px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-  .right { flex: 1; background: #f7f7f7; display: flex; align-items: center; justify-content: center; padding: 32px; }
-  .top-info { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
-  .tag { background: #e6f6ff; color: #0078BE; padding: 8px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
-
-  /* Календарь */
-  .calendar-tag {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: #FFF2F1;
-    border-radius: 12px;
-    padding: 8px 12px;
-    font-size: 14px;
-    font-weight: 600;
-    color: #F55B4A;
+  .overlay {
+    display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.6); justify-content: center; align-items: center; z-index: 999;
   }
+  .popup {
+    display: flex; flex-direction: row; background: #fff; border-radius: 20px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.2); overflow: hidden; max-width: 900px; width: 100%;
+    position: relative;
+  }
+  .left {
+    padding: 40px; flex: 1.1;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .right {
+    background: #f3f3f3; flex: 1; display: flex; justify-content: center; align-items: center;
+    padding: 24px;
+  }
+
+  .top-info {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 24px;
+  }
+
+  .tag {
+    display: flex; align-items: center; gap: 8px;
+    background: #FFF2F1; color: #F55B4A;
+    padding: 8px 16px; border-radius: 12px;
+    font-size: 14px; font-weight: 600;
+  }
+
   .calendar-box {
-    background: #F55B4A;
-    color: white;
-    border-radius: 8px;
-    padding: 4px 8px;
-    text-align: center;
-    min-width: 38px;
+    display: flex; flex-direction: column;
+    background: #F55B4A; color: white; border-radius: 10px;
+    padding: 6px 10px; text-align: center; min-width: 42px;
   }
-  .calendar-day {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1;
-  }
-  .calendar-text {
-    font-size: 10px;
-    line-height: 1;
-  }
+  .calendar-day { font-size: 18px; font-weight: 700; line-height: 1; }
+  .calendar-text { font-size: 10px; line-height: 1; }
+
   .calendar-caption {
-    font-size: 14px;
+    font-size: 14px; color: #F55B4A; font-weight: 600;
   }
 
-  .title { font-size: 26px; font-weight: 700; margin-bottom: 20px; line-height: 1.3; }
+  .title {
+    font-size: 24px; font-weight: 700; margin-bottom: 20px; line-height: 1.4;
+  }
   .title span { color: #F55B4A; }
-  ul { margin-left: 18px; margin-bottom: 20px; font-size: 15px; line-height: 1.5; color: #333; }
-  input[type="text"] { padding: 14px; font-size: 16px; border-radius: 10px; border: 1px solid #ccc; width: 100%; margin-bottom: 16px; }
-  label.checkbox { font-size: 13px; display: flex; gap: 10px; align-items: start; margin-bottom: 20px; color: #555; }
-  label.checkbox a { color: #0078BE; text-decoration: underline; }
-  button.submit-btn { background: #F55B4A; color: white; border: none; padding: 16px; font-size: 16px; font-weight: 600; border-radius: 10px; cursor: pointer; width: 100%; }
-  .close { position: absolute; top: 16px; right: 16px; font-size: 28px; color: red; cursor: pointer; background: none; border: none; }
-  .doctor-card img { max-width: 100%; border-radius: 12px; }
-  .doctor-info { background: #fff; padding: 12px 16px; border-radius: 12px; margin-top: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-size: 14px; }
-  .doctor-info .clinic { color: #00A99D; font-weight: 600; margin-bottom: 4px; font-size: 13px; }
-  .thank-you { display: none; background: white; padding: 40px; border-radius: 16px; text-align: center; font-size: 20px; }
+
+  ul {
+    margin-left: 20px; margin-bottom: 20px; font-size: 15px; line-height: 1.5; color: #333;
+  }
+
+  input[type="text"] {
+    padding: 14px; font-size: 16px; border-radius: 10px; border: 1px solid #ccc;
+    width: 100%; margin-bottom: 16px;
+  }
+
+  label.checkbox {
+    font-size: 13px; display: flex; gap: 10px; align-items: flex-start;
+    margin-bottom: 20px; color: #555;
+  }
+
+  label.checkbox a {
+    color: #0078BE; text-decoration: underline;
+  }
+
+  button.submit-btn {
+    background: #F55B4A; color: white; border: none;
+    padding: 16px; font-size: 16px; font-weight: 600;
+    border-radius: 10px; cursor: pointer; width: 100%;
+  }
+
+  .close {
+    position: absolute; top: 16px; right: 16px; font-size: 26px;
+    color: #999; background: none; border: none; cursor: pointer;
+  }
+
+  .doctor-card img {
+    max-width: 100%; border-radius: 14px;
+  }
+
+  .doctor-info {
+    margin-top: 16px; padding: 12px 16px; background: #fff;
+    border-radius: 12px; font-size: 14px; text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+  .doctor-info .clinic {
+    color: #00A99D; font-weight: 600; margin-bottom: 6px;
+    font-size: 13px;
+  }
+
+  .thank-you {
+    display: none; background: white; padding: 40px;
+    border-radius: 16px; text-align: center; font-size: 20px;
+  }
+
   @media (max-width: 768px) {
     .popup { flex-direction: column; }
     .left, .right { padding: 24px; }
@@ -69,7 +112,7 @@
       <div>
         <div class="top-info">
           <div class="tag">📅 Только до <span id="dateDeadline"></span></div>
-          <div class="calendar-tag">
+          <div style="display: flex; flex-direction: column; align-items: center;">
             <div class="calendar-box">
               <div class="calendar-day" id="placesLeft">7</div>
               <div class="calendar-text">мест</div>
@@ -77,12 +120,17 @@
             <div class="calendar-caption">Осталось</div>
           </div>
         </div>
-        <div class="title">Получите <span>бесплатную консультацию врача</span><br>и подробный план лечения!</div>
+
+        <div class="title">
+          Получите <span>бесплатную консультацию</span><br>и подробный план лечения!
+        </div>
+
         <ul>
           <li>Врач бесплатно проведет исследование и осмотр;</li>
-          <li>Соберет анамнез, чтобы оценить состояние вашего здоровья;</li>
-          <li>Бесплатно составит план лечения под ваш клинический случай и бюджет.</li>
+          <li>Соберет анамнез и оценит состояние здоровья;</li>
+          <li>Составит персональный план лечения бесплатно.</li>
         </ul>
+
         <input type="text" id="phone" placeholder="+7 (000) 000-00-00">
         <label class="checkbox">
           <input type="checkbox" id="consent">
@@ -97,7 +145,7 @@
         <div class="doctor-info">
           <div class="clinic">ДИНАСТИЯ ВРАЧЕЙ</div>
           <div><strong>Хачатрян Артур Мамиконович</strong></div>
-          <div>Заведующий хирургическим отделением<br>«Династия врачей», Хирург-имплантолог</div>
+          <div>Заведующий хирургическим отделением<br>Хирург-имплантолог</div>
         </div>
       </div>
     </div>
@@ -126,13 +174,13 @@
     const today = new Date();
     today.setDate(today.getDate() + 4);
     const day = today.getDate().toString().padStart(2, '0');
-    const month = today.toLocaleString('ru-RU', { month: 'long' }); // Апреля и т.д.
+    const month = today.toLocaleString('ru-RU', { month: 'long' });
     deadlineDate.textContent = `${day} ${month}`;
   }
 
   updateDeadline();
 
-  submitBtn.addEventListener('click', function() {
+  submitBtn.addEventListener('click', function () {
     if (!phoneInput.value.trim()) {
       alert('Введите телефон.');
       return;
@@ -149,11 +197,11 @@
       method: 'POST',
       body: formData
     })
-    .then(() => {
-      popupOverlay.style.display = 'none';
-      thankYouOverlay.style.display = 'flex';
-      setTimeout(() => thankYouOverlay.style.display = 'none', 3000);
-    })
-    .catch(err => alert('Ошибка отправки: ' + err));
+      .then(() => {
+        popupOverlay.style.display = 'none';
+        thankYouOverlay.style.display = 'flex';
+        setTimeout(() => thankYouOverlay.style.display = 'none', 3000);
+      })
+      .catch(err => alert('Ошибка отправки: ' + err));
   });
 </script>
