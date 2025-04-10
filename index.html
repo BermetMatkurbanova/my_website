@@ -9,6 +9,8 @@
     .right { flex: 1; background: #f7f7f7; display: flex; align-items: center; justify-content: center; padding: 32px; }
     .top-info { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
     .tag { background: #e6f6ff; color: #0078BE; padding: 8px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+
+    /* Календарь */
     .calendar-tag {
       display: flex;
       align-items: center;
@@ -40,6 +42,7 @@
     .calendar-caption {
       font-size: 14px;
     }
+
     .title { font-size: 26px; font-weight: 700; margin-bottom: 20px; line-height: 1.3; }
     .title span { color: #F55B4A; }
     ul { margin-left: 18px; margin-bottom: 20px; font-size: 15px; line-height: 1.5; color: #333; }
@@ -59,112 +62,99 @@
   </style>
 
 
-<button id="openPopup">Открыть</button>
+  <button id="openPopup">Открыть</button>
 
-<div class="overlay" id="popupOverlay">
-  <div class="popup">
-    <button class="close" id="closePopup">&times;</button>
-    <div class="left">
-      <div>
-        <div class="top-info">
-          <div class="tag">📅 Только до <span id="dateDeadline"></span></div>
-          <div class="calendar-tag">
-            <div class="calendar-box">
-              <div class="calendar-day" id="daysLeft">7</div>
-              <div class="calendar-text">дней</div>
+  <div class="overlay" id="popupOverlay">
+    <div class="popup">
+      <button class="close" id="closePopup">&times;</button>
+      <div class="left">
+        <div>
+          <div class="top-info">
+            <div class="tag">📅 Только до <span id="dateDeadline"></span></div>
+            <div class="calendar-tag">
+              <div class="calendar-box">
+                <div class="calendar-day" id="daysLeft">7</div>
+                <div class="calendar-text">дней</div>
+              </div>
+              <div class="calendar-caption">Осталось</div>
             </div>
-            <div class="calendar-caption">Осталось</div>
           </div>
+          <div class="title">Получите <span>бесплатную консультацию врача</span><br>и подробный план лечения!</div>
+          <ul>
+            <li>Врач бесплатно проведет исследование и осмотр;</li>
+            <li>Соберет анамнез, чтобы оценить состояние вашего здоровья;</li>
+            <li>Бесплатно составит план лечения под ваш клинический случай и бюджет.</li>
+          </ul>
+          <input type="text" id="phone" placeholder="+7 (000) 000-00-00">
+          <label class="checkbox">
+            <input type="checkbox" id="consent">
+            <span>Я подтверждаю согласие на обработку <a href="#">персональных данных</a></span>
+          </label>
+          <button class="submit-btn" id="submitForm">Получить консультацию бесплатно</button>
         </div>
-        <div class="title">Получите <span>бесплатную консультацию врача</span><br>и подробный план лечения!</div>
-        <ul>
-          <li>Врач бесплатно проведет исследование и осмотр;</li>
-          <li>Соберет анамнез, чтобы оценить состояние вашего здоровья;</li>
-          <li>Бесплатно составит план лечения под ваш клинический случай и бюджет.</li>
-        </ul>
-        <input type="text" id="phone" placeholder="+7 (000) 000-00-00">
-        <label class="checkbox">
-          <input type="checkbox" id="consent">
-          <span>Я подтверждаю согласие на обработку <a href="#">персональных данных</a></span>
-        </label>
-        <button class="submit-btn" id="submitForm">Получить консультацию бесплатно</button>
       </div>
-    </div>
-    <div class="right">
-      <div class="doctor-card">
-        <img src="https://raw.githubusercontent.com/BermetMatkurbanova/my_website/main/Artur.png" alt="Доктор">
-        <div class="doctor-info">
-          <div class="clinic">ДИНАСТИЯ ВРАЧЕЙ</div>
-          <div><strong>Хачатрян Артур Мамиконович</strong></div>
-          <div>Заведующий хирургическим отделением<br>«Династия врачей», Хирург-имплантолог</div>
+      <div class="right">
+        <div class="doctor-card">
+          <img src="https://raw.githubusercontent.com/BermetMatkurbanova/my_website/main/Artur.png" alt="Доктор">
+          <div class="doctor-info">
+            <div class="clinic">ДИНАСТИЯ ВРАЧЕЙ</div>
+            <div><strong>Хачатрян Артур Мамиконович</strong></div>
+            <div>Заведующий хирургическим отделением<br>«Династия врачей», Хирург-имплантолог</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<div class="overlay" id="thankYouOverlay">
-  <div class="thank-you">Спасибо! Ваша заявка отправлена.</div>
-</div>
+  <div class="overlay" id="thankYouOverlay">
+    <div class="thank-you">Спасибо! Ваша заявка отправлена.</div>
+  </div>
 
-<script>
-  const openBtn = document.getElementById('openPopup');
-  const closeBtn = document.getElementById('closePopup');
-  const popupOverlay = document.getElementById('popupOverlay');
-  const thankYouOverlay = document.getElementById('thankYouOverlay');
-  const phoneInput = document.getElementById('phone');
-  const consentCheckbox = document.getElementById('consent');
-  const submitBtn = document.getElementById('submitForm');
-  const deadlineDate = document.getElementById('dateDeadline');
+  <script>
+    const openBtn = document.getElementById('openPopup');
+    const closeBtn = document.getElementById('closePopup');
+    const popupOverlay = document.getElementById('popupOverlay');
+    const thankYouOverlay = document.getElementById('thankYouOverlay');
+    const phoneInput = document.getElementById('phone');
+    const consentCheckbox = document.getElementById('consent');
+    const submitBtn = document.getElementById('submitForm');
+    const deadlineDate = document.getElementById('dateDeadline');
 
-  openBtn.addEventListener('click', () => popupOverlay.style.display = 'flex');
-  closeBtn.addEventListener('click', () => popupOverlay.style.display = 'none');
+    openBtn.addEventListener('click', () => popupOverlay.style.display = 'flex');
+    closeBtn.addEventListener('click', () => popupOverlay.style.display = 'none');
 
-  function updateDeadline() {
-    const startDate = new Date(2025, 3, 4); // 4 апреля 2025
-    const today = new Date();
-
-    // Разница в днях между текущей датой и стартовой датой
-    const oneDayMs = 1000 * 60 * 60 * 24;
-    const diffDays = Math.floor((today - startDate) / oneDayMs);
-
-    // Находим ближайшую дату через 4 дня от стартовой
-    const daysToAdd = Math.floor(diffDays / 4) * 4 + 4;
-    const nextDate = new Date(startDate);
-    nextDate.setDate(startDate.getDate() + daysToAdd);
-
-    const day = nextDate.getDate().toString().padStart(2, '0');
-    const month = nextDate.toLocaleString('ru-RU', { month: 'long' });
-
-    document.getElementById('dateDeadline').textContent = `${day} ${month}`;
-  }
-
-  updateDeadline();
-
-  submitBtn.addEventListener('click', function() {
-    if (!phoneInput.value.trim()) {
-      alert('Введите телефон.');
-      return;
-    }
-    if (!consentCheckbox.checked) {
-      alert('Вы должны согласиться с обработкой персональных данных.');
-      return;
+    function updateDeadline() {
+      const today = new Date();
+      today.setDate(today.getDate() + 4);
+      const day = today.getDate().toString().padStart(2, '0');
+      const month = today.toLocaleString('ru-RU', { month: 'long' }); // Апреля и т.д.
+      deadlineDate.textContent = `${day} ${month}`;
     }
 
-    const formData = new FormData();
-    formData.append('phone', phoneInput.value);
+    updateDeadline();
 
-    fetch('send.php', {
-      method: 'POST',
-      body: formData
-    })
-    .then(() => {
-      popupOverlay.style.display = 'none';
-      thankYouOverlay.style.display = 'flex';
-      setTimeout(() => thankYouOverlay.style.display = 'none', 3000);
-    })
-    .catch(err => alert('Ошибка отправки: ' + err));
-  });
-</script>
+    submitBtn.addEventListener('click', function() {
+      if (!phoneInput.value.trim()) {
+        alert('Введите телефон.');
+        return;
+      }
+      if (!consentCheckbox.checked) {
+        alert('Вы должны согласиться с обработкой персональных данных.');
+        return;
+      }
 
+      const formData = new FormData();
+      formData.append('phone', phoneInput.value);
 
+      fetch('send.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(() => {
+        popupOverlay.style.display = 'none';
+        thankYouOverlay.style.display = 'flex';
+        setTimeout(() => thankYouOverlay.style.display = 'none', 3000);
+      })
+      .catch(err => alert('Ошибка отправки: ' + err));
+    });
+  </script>
