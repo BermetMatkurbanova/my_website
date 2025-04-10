@@ -1,161 +1,168 @@
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; margin: 0; background: #f9f9f9; }
+  .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000; }
+  .popup { background: #fff; border-radius: 16px; max-width: 980px; width: 100%; display: flex; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.15); position: relative; }
+  .left { padding: 40px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
+  .right { flex: 1; background: #f7f7f7; display: flex; align-items: center; justify-content: center; padding: 32px; }
+  .top-info { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
+  .tag { background: #e6f6ff; color: #0078BE; padding: 8px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; }
-    body { font-family: 'Inter', sans-serif; margin: 0; background: #f9f9f9; }
-    .overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center; z-index: 1000; }
-    .popup { background: #fff; border-radius: 16px; max-width: 980px; width: 100%; display: flex; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.15); position: relative; }
-    .left { padding: 40px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
-    .right { flex: 1; background: #f7f7f7; display: flex; align-items: center; justify-content: center; padding: 32px; }
-    .top-info { display: flex; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
-    .tag { background: #e6f6ff; color: #0078BE; padding: 8px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .calendar-tag {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #FFF2F1;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #F55B4A;
+  }
+  .calendar-box {
+    background: #F55B4A;
+    color: white;
+    border-radius: 8px;
+    padding: 4px 8px;
+    text-align: center;
+    min-width: 38px;
+  }
+  .calendar-day {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1;
+  }
+  .calendar-text {
+    font-size: 10px;
+    line-height: 1;
+  }
+  .calendar-caption {
+    font-size: 14px;
+  }
 
-    /* Календарь */
-    .calendar-tag {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: #FFF2F1;
-      border-radius: 12px;
-      padding: 8px 12px;
-      font-size: 14px;
-      font-weight: 600;
-      color: #F55B4A;
-    }
-    .calendar-box {
-      background: #F55B4A;
-      color: white;
-      border-radius: 8px;
-      padding: 4px 8px;
-      text-align: center;
-      min-width: 38px;
-    }
-    .calendar-day {
-      font-size: 16px;
-      font-weight: 700;
-      line-height: 1;
-    }
-    .calendar-text {
-      font-size: 10px;
-      line-height: 1;
-    }
-    .calendar-caption {
-      font-size: 14px;
-    }
+  .title { font-size: 26px; font-weight: 700; margin-bottom: 20px; line-height: 1.3; }
+  .title span { color: #F55B4A; }
+  ul { margin-left: 18px; margin-bottom: 20px; font-size: 15px; line-height: 1.5; color: #333; }
+  input[type="text"] { padding: 14px; font-size: 16px; border-radius: 10px; border: 1px solid #ccc; width: 100%; margin-bottom: 16px; }
+  label.checkbox { font-size: 13px; display: flex; gap: 10px; align-items: start; margin-bottom: 20px; color: #555; }
+  label.checkbox a { color: #0078BE; text-decoration: underline; }
+  button.submit-btn { background: #F55B4A; color: white; border: none; padding: 16px; font-size: 16px; font-weight: 600; border-radius: 10px; cursor: pointer; width: 100%; }
+  .close { position: absolute; top: 16px; right: 16px; font-size: 28px; color: red; cursor: pointer; background: none; border: none; }
+  .doctor-card img { max-width: 100%; border-radius: 12px; }
+  .doctor-info { background: #fff; padding: 12px 16px; border-radius: 12px; margin-top: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-size: 14px; }
+  .doctor-info .clinic { color: #00A99D; font-weight: 600; margin-bottom: 4px; font-size: 13px; }
+  .thank-you { display: none; background: white; padding: 40px; border-radius: 16px; text-align: center; font-size: 20px; }
+  @media (max-width: 768px) {
+    .popup { flex-direction: column; }
+    .left, .right { padding: 24px; }
+  }
+</style>
 
-    .title { font-size: 26px; font-weight: 700; margin-bottom: 20px; line-height: 1.3; }
-    .title span { color: #F55B4A; }
-    ul { margin-left: 18px; margin-bottom: 20px; font-size: 15px; line-height: 1.5; color: #333; }
-    input[type="text"] { padding: 14px; font-size: 16px; border-radius: 10px; border: 1px solid #ccc; width: 100%; margin-bottom: 16px; }
-    label.checkbox { font-size: 13px; display: flex; gap: 10px; align-items: start; margin-bottom: 20px; color: #555; }
-    label.checkbox a { color: #0078BE; text-decoration: underline; }
-    button.submit-btn { background: #F55B4A; color: white; border: none; padding: 16px; font-size: 16px; font-weight: 600; border-radius: 10px; cursor: pointer; width: 100%; }
-    .close { position: absolute; top: 16px; right: 16px; font-size: 28px; color: red; cursor: pointer; background: none; border: none; }
-    .doctor-card img { max-width: 100%; border-radius: 12px; }
-    .doctor-info { background: #fff; padding: 12px 16px; border-radius: 12px; margin-top: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-size: 14px; }
-    .doctor-info .clinic { color: #00A99D; font-weight: 600; margin-bottom: 4px; font-size: 13px; }
-    .thank-you { display: none; background: white; padding: 40px; border-radius: 16px; text-align: center; font-size: 20px; }
-    @media (max-width: 768px) {
-      .popup { flex-direction: column; }
-      .left, .right { padding: 24px; }
-    }
-  </style>
+<button id="openPopup">Открыть</button>
 
-
-  <button id="openPopup">Открыть</button>
-
-  <div class="overlay" id="popupOverlay">
-    <div class="popup">
-      <button class="close" id="closePopup">&times;</button>
-      <div class="left">
-        <div>
-          <div class="top-info">
-            <div class="tag">📅 Только до <span id="dateDeadline"></span></div>
-            <div class="calendar-tag">
-              <div class="calendar-box">
-                <div class="calendar-day" id="daysLeft">7</div>
-                <div class="calendar-text">дней</div>
-              </div>
-              <div class="calendar-caption">Осталось</div>
+<div class="overlay" id="popupOverlay">
+  <div class="popup">
+    <button class="close" id="closePopup">&times;</button>
+    <div class="left">
+      <div>
+        <div class="top-info">
+          <div class="tag">📅 Только до <span id="dateDeadline"></span></div>
+          <div class="calendar-tag">
+            <div class="calendar-box">
+              <div class="calendar-day" id="daysLeft">7</div>
+              <div class="calendar-text" id="calendarLabel">мест</div> <!-- Обновлено с "дней" на "мест" -->
             </div>
+            <div class="calendar-caption">Осталось</div>
           </div>
-          <div class="title">Получите <span>бесплатную консультацию врача</span><br>и подробный план лечения!</div>
-          <ul>
-            <li>Врач бесплатно проведет исследование и осмотр;</li>
-            <li>Соберет анамнез, чтобы оценить состояние вашего здоровья;</li>
-            <li>Бесплатно составит план лечения под ваш клинический случай и бюджет.</li>
-          </ul>
-          <input type="text" id="phone" placeholder="+7 (000) 000-00-00">
-          <label class="checkbox">
-            <input type="checkbox" id="consent">
-            <span>Я подтверждаю согласие на обработку <a href="#">персональных данных</a></span>
-          </label>
-          <button class="submit-btn" id="submitForm">Получить консультацию бесплатно</button>
         </div>
+        <div class="title">Получите <span>бесплатную консультацию врача</span><br>и подробный план лечения!</div>
+        <ul>
+          <li>Врач бесплатно проведет исследование и осмотр;</li>
+          <li>Соберет анамнез, чтобы оценить состояние вашего здоровья;</li>
+          <li>Бесплатно составит план лечения под ваш клинический случай и бюджет.</li>
+        </ul>
+        <input type="text" id="phone" placeholder="+7 (000) 000-00-00">
+        <label class="checkbox">
+          <input type="checkbox" id="consent">
+          <span>Я подтверждаю согласие на обработку <a href="#">персональных данных</a></span>
+        </label>
+        <button class="submit-btn" id="submitForm">Получить консультацию бесплатно</button>
       </div>
-      <div class="right">
-        <div class="doctor-card">
-          <img src="https://raw.githubusercontent.com/BermetMatkurbanova/my_website/main/Artur.png" alt="Доктор">
-          <div class="doctor-info">
-            <div class="clinic">ДИНАСТИЯ ВРАЧЕЙ</div>
-            <div><strong>Хачатрян Артур Мамиконович</strong></div>
-            <div>Заведующий хирургическим отделением<br>«Династия врачей», Хирург-имплантолог</div>
-          </div>
+    </div>
+    <div class="right">
+      <div class="doctor-card">
+        <img src="https://raw.githubusercontent.com/BermetMatkurbanova/my_website/main/Artur.png" alt="Доктор">
+        <div class="doctor-info">
+          <div class="clinic">ДИНАСТИЯ ВРАЧЕЙ</div>
+          <div><strong>Хачатрян Артур Мамиконович</strong></div>
+          <div>Заведующий хирургическим отделением<br>«Династия врачей», Хирург-имплантолог</div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <div class="overlay" id="thankYouOverlay">
-    <div class="thank-you">Спасибо! Ваша заявка отправлена.</div>
-  </div>
+<div class="overlay" id="thankYouOverlay">
+  <div class="thank-you">Спасибо! Ваша заявка отправлена.</div>
+</div>
 
-  <script>
-    const openBtn = document.getElementById('openPopup');
-    const closeBtn = document.getElementById('closePopup');
-    const popupOverlay = document.getElementById('popupOverlay');
-    const thankYouOverlay = document.getElementById('thankYouOverlay');
-    const phoneInput = document.getElementById('phone');
-    const consentCheckbox = document.getElementById('consent');
-    const submitBtn = document.getElementById('submitForm');
-    const deadlineDate = document.getElementById('dateDeadline');
+<script>
+  const openBtn = document.getElementById('openPopup');
+  const closeBtn = document.getElementById('closePopup');
+  const popupOverlay = document.getElementById('popupOverlay');
+  const thankYouOverlay = document.getElementById('thankYouOverlay');
+  const phoneInput = document.getElementById('phone');
+  const consentCheckbox = document.getElementById('consent');
+  const submitBtn = document.getElementById('submitForm');
+  const deadlineDate = document.getElementById('dateDeadline');
 
-    openBtn.addEventListener('click', () => popupOverlay.style.display = 'flex');
-    closeBtn.addEventListener('click', () => popupOverlay.style.display = 'none');
+  openBtn.addEventListener('click', () => popupOverlay.style.display = 'flex');
+  closeBtn.addEventListener('click', () => popupOverlay.style.display = 'none');
 
-    function updateDeadline() {
-      const today = new Date();
-      today.setDate(today.getDate() + 4);
-      const day = today.getDate().toString().padStart(2, '0');
-      const month = today.toLocaleString('ru-RU', { month: 'long' }); // Апреля и т.д.
-      deadlineDate.textContent = `${day} ${month}`;
+  function updateDeadline() {
+    const cycleDays = 4;
+    const startDate = new Date(2025, 3, 4); // 4 апреля 2025
+
+    const today = new Date();
+    const diffTime = today.getTime() - startDate.getTime();
+    const daysPassed = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    const cycleIndex = Math.floor(daysPassed / cycleDays) + 1;
+    const nextDeadline = new Date(startDate);
+    nextDeadline.setDate(startDate.getDate() + cycleIndex * cycleDays);
+
+    const day = nextDeadline.getDate().toString().padStart(2, '0');
+    const month = nextDeadline.toLocaleString('ru-RU', { month: 'long' });
+    deadlineDate.textContent = `${day} ${month}`;
+  }
+
+  updateDeadline();
+
+  // Можно и здесь поменять текст, если хочешь сделать это через JS:
+  document.getElementById('calendarLabel').textContent = 'мест';
+
+  submitBtn.addEventListener('click', function() {
+    if (!phoneInput.value.trim()) {
+      alert('Введите телефон.');
+      return;
+    }
+    if (!consentCheckbox.checked) {
+      alert('Вы должны согласиться с обработкой персональных данных.');
+      return;
     }
 
-    updateDeadline();
+    const formData = new FormData();
+    formData.append('phone', phoneInput.value);
 
-    submitBtn.addEventListener('click', function() {
-      if (!phoneInput.value.trim()) {
-        alert('Введите телефон.');
-        return;
-      }
-      if (!consentCheckbox.checked) {
-        alert('Вы должны согласиться с обработкой персональных данных.');
-        return;
-      }
-
-      const formData = new FormData();
-      formData.append('phone', phoneInput.value);
-
-      fetch('send.php', {
-        method: 'POST',
-        body: formData
-      })
-      .then(() => {
-        popupOverlay.style.display = 'none';
-        thankYouOverlay.style.display = 'flex';
-        setTimeout(() => thankYouOverlay.style.display = 'none', 3000);
-      })
-      .catch(err => alert('Ошибка отправки: ' + err));
-    });
-  </script>
-
+    fetch('send.php', {
+      method: 'POST',
+      body: formData
+    })
+    .then(() => {
+      popupOverlay.style.display = 'none';
+      thankYouOverlay.style.display = 'flex';
+      setTimeout(() => thankYouOverlay.style.display = 'none', 3000);
+    })
+    .catch(err => alert('Ошибка отправки: ' + err));
+  });
+</script>
